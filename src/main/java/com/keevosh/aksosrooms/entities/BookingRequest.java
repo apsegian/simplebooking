@@ -3,63 +3,52 @@ package com.keevosh.aksosrooms.entities;
 import com.keevosh.aksosrooms.enums.Status;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 /**
  *
  * @author Orestis
  */
 @Entity
-@Table(name = "booking_req")
+@Table(name = "booking_requests")
 public class BookingRequest extends PersistentObject {
 
     private Visitor visitor;
     private String bookingRefNum;
-    private Date dateRequested;
-    private Date requestedFromDate;
-    private Date requestedToDate;
+    private Date dateCreated;
+    private Date dateFrom;
+    private Date dateTo;
     private List<ServiceRequest> requestedServices;
     private String comments;
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     public Visitor getVisitor() {
         return visitor;
     }
 
-    @Column(name = "booking_ref")
+    @Column(name = "booking_ref", nullable = false)
     public String getBookingRefNum() {
         return bookingRefNum;
     }
 
-    @Column(name = "date_requested")
+    @Column(name = "date_created", nullable = false, updatable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getDateRequested() {
-        return dateRequested;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    @Column(name = "requested_from_date")
+    @Column(name = "date_from", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getRequestedFromDate() {
-        return requestedFromDate;
+    public Date getDateFrom() {
+        return dateFrom;
     }
 
-    @Column(name = "requested_to_date")
+    @Column(name = "date_to", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getRequestedToDate() {
-        return requestedToDate;
-    }
-
-    @Transient
-    public List<ServiceRequest> getRequestedServices() {
-        return requestedServices;
+    public Date getDateTo() {
+        return dateTo;
     }
 
     @Column(name = "comments")
@@ -67,9 +56,15 @@ public class BookingRequest extends PersistentObject {
         return comments;
     }
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     public Status getStatus() {
         return status;
+    }
+
+    @Transient
+    public List<ServiceRequest> getRequestedServices() {
+        return requestedServices;
     }
 
     public void setBookingRefNum(String bookingRefNum) {
@@ -80,16 +75,16 @@ public class BookingRequest extends PersistentObject {
         this.visitor = visitor;
     }
 
-    public void setDateRequested(Date dateRequested) {
-        this.dateRequested = dateRequested;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public void setRequestedFromDate(Date requestedFromDate) {
-        this.requestedFromDate = requestedFromDate;
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
     }
 
-    public void setRequestedToDate(Date requestedToDate) {
-        this.requestedToDate = requestedToDate;
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
     }
 
     public void setRequestedServices(List<ServiceRequest> requestedServices) {

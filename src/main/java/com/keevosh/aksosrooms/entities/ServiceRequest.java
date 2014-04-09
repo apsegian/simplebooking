@@ -2,12 +2,7 @@ package com.keevosh.aksosrooms.entities;
 
 import com.keevosh.aksosrooms.enums.Status;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 
 /**
  *
@@ -25,34 +20,35 @@ public class ServiceRequest extends PersistentObject {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     public Visitor getVisitor() {
         return visitor;
     }
 
-    @Column(name = "booking_ref")
+    @Column(name = "booking_ref", nullable = false)
     public String getBookingRefNum() {
         return bookingRefNum;
     }
 
     @ManyToOne
-    @JoinColumn(name = "service_id")
+    @JoinColumn(name = "service_id", nullable = false)
     public Service getService() {
         return service;
     }
 
-    @Column(name = "date_requested")
+    @Column(name = "date_requested", nullable = false, updatable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     public Date getDateRequested() {
         return dateRequested;
     }
 
-    @Column(name = "appointment")
+    @Column(name = "appointment", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     public Date getAppointment() {
         return appointment;
     }
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     public Status getStatus() {
         return status;

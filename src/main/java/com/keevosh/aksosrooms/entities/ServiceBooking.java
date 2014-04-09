@@ -2,12 +2,8 @@ package com.keevosh.aksosrooms.entities;
 
 import com.keevosh.aksosrooms.enums.Status;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
+
 import org.joda.money.Money;
 
 /**
@@ -15,20 +11,19 @@ import org.joda.money.Money;
  * @author Orestis
  */
 @Entity
-@Table(name = "service_booking")
+@Table(name = "service_bookings")
 public class ServiceBooking extends PersistentObject{
     
     private Booking booking;
     private String bookingRefNum;
     private Service service;
-    private Date dateRequested;
-    private Date dateRegistered;
+    private Date dateCreated;
     private Date appointment;
     private Money price;
     private Status status;
 
     @ManyToOne
-    @Column(name = "booking_id")
+    @Column(name = "booking_id", nullable = false)
     public Booking getBooking() {
         return booking;
     }
@@ -39,21 +34,15 @@ public class ServiceBooking extends PersistentObject{
     }
 
     @ManyToOne
-    @JoinColumn(name = "service_id")
+    @JoinColumn(name = "service_id", nullable = false)
     public Service getService() {
         return service;
     }
 
-    @Column(name = "date_requested")
+    @Column(name = "date_created", nullable = false, updatable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getDateRequested() {
-        return dateRequested;
-    }
-
-    @Column(name = "date_registered", nullable = false, updatable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getDateRegistered() {
-        return dateRegistered;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
     @Column(name = "appointment")
@@ -62,12 +51,13 @@ public class ServiceBooking extends PersistentObject{
         return appointment;
     }
 
-    @Column(name = "service_price")
+    @Column(name = "service_price", nullable = false)
     public Money getPrice() {
         return price;
     }
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     public Status getStatus() {
         return status;
     }
@@ -84,12 +74,8 @@ public class ServiceBooking extends PersistentObject{
         this.service = service;
     }
 
-    public void setDateRequested(Date dateRequested) {
-        this.dateRequested = dateRequested;
-    }
-
-    public void setDateRegistered(Date dateRegistered) {
-        this.dateRegistered = dateRegistered;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public void setAppointment(Date appointment) {

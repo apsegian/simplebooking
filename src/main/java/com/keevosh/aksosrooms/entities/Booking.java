@@ -3,14 +3,8 @@ package com.keevosh.aksosrooms.entities;
 import com.keevosh.aksosrooms.enums.Status;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
+
 import org.joda.money.Money;
 
 /**
@@ -19,16 +13,15 @@ import org.joda.money.Money;
  */
 
 @Entity
-@Table(name = "booking")
+@Table(name = "bookings")
 public class Booking extends PersistentObject {
     
     private Visitor visitor;
     private String bookingRefNum;
     private String villa;
-    private Date dateRequested;
-    private Date dateRegistered;
-    private Date fromDate;
-    private Date toDate;
+    private Date dateCreated;
+    private Date dateFrom;
+    private Date dateTo;
     private Money dailyRates;
     private boolean seasonSpecialRate = false;
     private String seasonSpecialRateDesc;
@@ -37,61 +30,55 @@ public class Booking extends PersistentObject {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     public Visitor getVisitor() {
         return visitor;
     }
 
-    @Column(name = "booking_ref")
+    @Column(name = "booking_ref", nullable = false)
     public String getBookingRefNum() {
         return bookingRefNum;
     }
 
-    @Column(name = "villa")
+    @Column(name = "villa", nullable = false)
     public String getVilla() {
         return villa;
     }
 
-    @Column(name = "date_requested")
+    @Column(name = "date_created", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getDateRequested() {
-        return dateRequested;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    @Column(name = "date_registered")
+    @Column(name = "date_from", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getDateRegistered() {
-        return dateRegistered;
+    public Date getDateFrom() {
+        return dateFrom;
     }
 
-    @Column(name = "from_date")
+    @Column(name = "date_to", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getFromDate() {
-        return fromDate;
+    public Date getDateTo() {
+        return dateTo;
     }
 
-    @Column(name = "to_date")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getToDate() {
-        return toDate;
-    }
-
-    @Column(name = "daily_rates")
+    @Column(name = "daily_rates", nullable = false)
     public Money getDailyRates() {
         return dailyRates;
     }
 
-    @Column(name = "special_rate")
+    @Column(name = "special_rate", nullable = false)
     public boolean isSeasonSpecialRate() {
         return seasonSpecialRate;
     }
 
-    @Column(name = "special_rate_desc")
+    @Column(name = "special_rate_desc", nullable = true)
     public String getSeasonSpecialRateDesc() {
         return seasonSpecialRateDesc;
     }
 
-    @Column(name = "total_price")
+    @Column(name = "total_price", nullable = false)
     public Money getTotalPrice() {
         return totalPrice;
     }
@@ -101,7 +88,8 @@ public class Booking extends PersistentObject {
         return servicesBooked;
     }
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     public Status getStatus() {
         return status;
     }
@@ -118,20 +106,16 @@ public class Booking extends PersistentObject {
         this.villa = villa;
     }
 
-    public void setDateRequested(Date dateRequested) {
-        this.dateRequested = dateRequested;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public void setDateRegistered(Date dateRegistered) {
-        this.dateRegistered = dateRegistered;
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
     }
 
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
     }
 
     public void setDailyRates(Money dailyRates) {

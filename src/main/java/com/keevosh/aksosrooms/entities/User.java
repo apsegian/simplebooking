@@ -1,6 +1,5 @@
 package com.keevosh.aksosrooms.entities;
 
-import com.keevosh.aksosrooms.enums.UserType;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -22,11 +21,10 @@ public class User extends PersistentObject {
     private String password;
     private String name;
     private String surname;
-    private Date birthDay;
     private String email;
+    private Date birthDay;
     private Date dateActivated;
     private Date dateCreated;
-    private UserType type;
 
     @Column(name = "password", nullable = false)
     public String getPassword() {
@@ -66,10 +64,6 @@ public class User extends PersistentObject {
         return dateCreated;
     }
 
-    public UserType getType() {
-        return type;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -97,10 +91,4 @@ public class User extends PersistentObject {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
-
-    public void setType(UserType type) {
-        this.type = type;
-    }
-    
-    
 }

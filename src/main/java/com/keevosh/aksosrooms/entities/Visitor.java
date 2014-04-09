@@ -1,5 +1,6 @@
 package com.keevosh.aksosrooms.entities;
 
+import java.beans.Transient;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -16,14 +17,17 @@ public class Visitor extends User {
     private List<BookingRequest> booking_req;
     private List<ServiceRequest> service_req;
 
+    @Transient
     public List<Booking> getBookings() {
         return bookings;
     }
 
+    @Transient
     public List<BookingRequest> getBooking_req() {
         return booking_req;
     }
 
+    @Transient
     public List<ServiceRequest> getService_req() {
         return service_req;
     }
@@ -39,6 +43,4 @@ public class Visitor extends User {
     public void setService_req(List<ServiceRequest> service_req) {
         this.service_req = service_req;
     }
-    
-    
 }
